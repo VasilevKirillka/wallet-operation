@@ -1,0 +1,28 @@
+server:
+  port: 8090
+
+spring:
+  liquibase:
+    enabled: ${LIQUIBASE_ENABLE:true}
+    drop-first: ${DROP_FIRST:true}
+    change-log: classpath:db/changelog/wallet-changelog.xml
+    default-schema: wallet
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/wallet}
+    username: ${SPRING_DATASOURCE_USERNAME:wallet}
+    password: ${SPRING_DATASOURCE_PASSWORD:wallet}
+    driverClassName: org.postgresql.Driver
+    hikari:
+      schema: wallet
+      connection-init-sql: CREATE SCHEMA IF NOT EXISTS wallet
+
+  jpa:
+    show-sql: ${SHOW_SQL:false}
+    hibernate:
+      ddl-auto: ${DDL_AUTO:none}
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: wallet
+

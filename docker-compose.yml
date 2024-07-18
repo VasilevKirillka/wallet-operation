@@ -1,0 +1,26 @@
+name: wallet_demo
+
+services:
+  wallet-db:
+    image: postgres
+    environment:
+      POSTGRES_USER: wallet
+      POSTGRES_PASSWORD: wallet
+      POSTGRES_DB: wallet
+    ports:
+      - "5432:5432"
+
+  wallet-app:
+    image: snamas/demo
+    depends_on:
+      - wallet-db
+    ports:
+      - "8090:8090"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://wallet-db:5432/wallet
+      SPRING_DATASOURCE_USERNAME: wallet
+      SPRING_DATASOURCE_PASSWORD: wallet
+      LIQUIBASE_ENABLE: true
+      DROP_FIRST: false
+      SHOW_SQL: false
+      DDL_AUTO: none
